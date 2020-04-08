@@ -1,3 +1,12 @@
+// Chrome Extension API modifications for async
+chrome.tabs.queryAsync = query => new Promise(resolve => {
+    chrome.tabs.query(query, tabs => {
+        if (tabs.length === 0)
+            throw 'Could not find any tabs';
+        resolve(tabs[0].id);
+    });
+});
+
 // Global
 var Settings = {};
 var TrackedDomains = {};
@@ -16,14 +25,15 @@ var PreviousTrackedTab = {
 var TabDomains = {};
 
 // Helper Classes
-function TrackingInfo() {
+function TrackingInfo(domain) {
     var self = this;
-
-    self.IsCurrentlyTracked;
+    self.Domain = domain;
+    
+    self.IsCurrentlyTracked = () => Settings.onlyTrackActiveTab === false && Object.keys(TabDomains).some(domain => TabDomains[domain] === self.Domain);
+    
     self.StartTime;
 
     self.Reset = () => {
-        self.IsCurrentlyTracked = false;
         self.StartTime = null;
     };
 
@@ -36,7 +46,7 @@ function ConstructTrackedDomains(settings) {
     let trackedDomains = {};
     for (let i = 0; i < settings.domains.length; i++) {
         const domain = settings.domains[i];
-        trackedDomains[domain] = new TrackingInfo();
+        trackedDomains[domain] = new TrackingInfo(domain);
     }
 
     return trackedDomains;
@@ -62,36 +72,36 @@ function getCurrentDateForId() {
     return today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate();
 }
 
-
 function StartTracking(tabId, domain) {
     // If the same tab switched from one tracked domain to the other,
     // stop tracking it as the old domain
-    if(TabDomains[tabId] !== domain)
+    if (TabDomains[tabId] !== undefined && TabDomains[tabId] !== domain)
         StopTracking(tabId);
 
-    // Update TabDomain dictionary
     TabDomains[tabId] = domain;
 
-    // Silently return, it's already being tracked
-    if (TrackedDomains[domain].IsCurrentlyTracked === true)
+    PreviousTrackedTab.Update(tabId, domain);
+
+    // Silently return it's irrelevant
+    if (TrackedDomains.hasOwnProperty(domain) === false)
         return;
 
     // Update TrackedDomains dictionary
-    TrackedDomains[domain].StartTime = new Date();
-    TrackedDomains[domain].IsCurrentlyTracked = true;
-
-
-    console.log('now tracking domain: "' + domain + '"');
+    if(TrackedDomains[domain].StartTime === null) {
+        TrackedDomains[domain].StartTime = new Date();
+        console.log('now tracking domain: "' + domain + '"');
+    }
 };
 
 function StopTracking(tabId) {
     let domain = TabDomains[tabId];
-    
+
     // This tab no longer is on this domain
     delete TabDomains[tabId];
 
-    // Silently return, it's done or irrelevant
-    if (TrackedDomains.hasOwnProperty(domain) === false || TrackedDomains[domain].IsCurrentlyTracked === false)
+    // Silently return, it's not a real domain or it's currently being tracked elsewhere
+    if (TrackedDomains.hasOwnProperty(domain) === false 
+        || TrackedDomains[domain].IsCurrentlyTracked() === true)
         return;
 
     let stopTime = new Date();
@@ -176,34 +186,25 @@ chrome.storage.onChanged.addListener((changes, areaName) => {
     }
 });
 
-chrome.tabs.onActivated.addListener(async (activeInfo) => {
-    // Only track if the setting is set to "Active"
-    if (Settings.onlyTrackActiveTab === true) {
-        console.log('--- onActivated');
-        let domain = await getDomainFromTabIdAsync(activeInfo.tabId);
-        
+chrome.tabs.onActivated.addListener(async activeInfo => {
+    console.log('--- onActivated');
+    let domain = await getDomainFromTabIdAsync(activeInfo.tabId);
+    
+    // Only stop tracking if the setting is set to "Active"
+    if (Settings.onlyTrackActiveTab === true)
         // Stop tracking previous active tab
-        // If the active tab was closed, can double fire with the "onRemoved" listener
         StopTracking(PreviousTrackedTab.Id);
 
-        // Only track if domain is in settings list and domain has changed
-        if (Settings.domains.includes(domain) === true)
-            StartTracking(activeInfo.tabId, domain);
-
-        // Done with this, now set it to current
-        PreviousTrackedTab.Update(activeInfo.tabId, domain);
-    }
+    // Only track if domain is in settings list and domain has changed
+    if (Settings.domains.includes(domain) === true)
+        StartTracking(activeInfo.tabId, domain);
 });
 
 chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
-    if (changeInfo.status !== 'complete') return;
+    if (changeInfo.status === 'complete') return;
 
     console.log('--- onUpdated');
     let domain = await getDomainFromTabIdAsync(tabId);
-
-    // Update current tab (for onActivate)
-    if (tab.active === true)
-        PreviousTrackedTab.Update(tabId, domain);
 
     // Only track if domain is in settings list
     if (Settings.domains.includes(domain) === true)
@@ -212,6 +213,31 @@ chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
         StopTracking(tabId);
 });
 
+// When closing a tab
 chrome.tabs.onRemoved.addListener(async (tabId, removeInfo) => {
-    StopTracking('');
+    StopTracking(tabId);
+});
+
+// ONLY MATTERS FOR onlyTrackActiveTab = true
+// Updates
+chrome.windows.onFocusChanged.addListener(async windowId => {
+    console.log('--- onFocusChanged');
+
+    // Get tabId and domain
+    let tabId = await chrome.tabs.queryAsync({
+        active: true,
+        windowId: windowId
+    });
+
+    // We're tracking active tab
+    if (Settings.onlyTrackActiveTab === true) {
+        StopTracking(PreviousTrackedTab.Id);
+
+        // Tracking active tab and the focus is still on a Chrome window
+        if (windowId !== chrome.windows.WINDOW_ID_NONE) {
+            let domain = await getDomainFromTabIdAsync(tabId);
+            if (Settings.domains.includes(domain) === true)
+                StartTracking(tabId, domain);
+        }
+    }
 });
