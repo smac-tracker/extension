@@ -1,14 +1,70 @@
 // Chrome Extension API modifications for async
 chrome.tabs.queryAsync = query => new Promise(resolve => {
     chrome.tabs.query(query, tabs => {
-        if (tabs.length === 0)
-            throw 'Could not find any tabs';
-        resolve(tabs[0].id);
+        resolve(tabs);
     });
 });
 
+chrome.windows.getCurrentAsync = getInfo => new Promise(resolve => {
+    chrome.windows.getCurrent(getInfo, window => resolve(window));
+});
+
+chrome.storage.sync.getAsync = keys => new Promise(resolve => {
+    chrome.storage.sync.get(keys, items => resolve(items));
+});
+
+chrome.storage.sync.setAsync = items => new Promise(resolve => {
+    chrome.storage.sync.set(items, () => resolve());
+});
+
 // Global
-var Settings = {};
+var Settings = (() => {
+    var instance = null;
+
+    function CreateInstance() {
+        var self = this;
+        self.onlyTrackActiveTab = true;
+        self.domains = [];
+    
+        self.Update = settings => {
+            self.onlyTrackActiveTab = settings.onlyTrackActiveTab;
+            self.domains = settings.domains;
+        };
+    
+        self.HasDomain = domain => self.domains.includes(domain);
+        self.AddDomain = domain => {
+            console.log(this);
+            if(self.HasDomain(domain) === true) return false;
+    
+            self.domains.push(domain);
+        };
+        self.RemoveDomain = domain => {
+            if(self.HasDomain(domain) === false) return false;
+    
+            self.domains.splice(self.domains.indexOf(domain), 1);
+        };
+    
+        self.Save = async () => {
+            let saveData = {
+                'settings': {
+                    onlyTrackActiveTab: self.onlyTrackActiveTab,
+                    domains: self.domains
+                }
+            };
+    
+            await chrome.storage.sync.setAsync(saveData);
+        };
+
+        return self;
+    }
+
+    return (() => {
+        if(instance === null)
+            instance = new CreateInstance();
+        return Object.freeze(instance);
+    })();
+})();
+
 var TrackedDomains = {};
 
 // For active tab tracking
@@ -52,6 +108,11 @@ function ConstructTrackedDomains(settings) {
     return trackedDomains;
 }
 
+function getDomainFromUrl(url) {
+    let objUrl = new URL(url);
+    return objUrl.hostname;
+}
+
 function getDomainFromTabIdAsync(tabId) {
     return new Promise(resolve => {
         if (tabId === null) {
@@ -61,8 +122,7 @@ function getDomainFromTabIdAsync(tabId) {
 
         chrome.tabs.get(+tabId, tab => {
             let strUrl = tab.hasOwnProperty('pendingUrl') ? tab.pendingUrl : tab.url;
-            let objUrl = new URL(strUrl);
-            resolve(objUrl.hostname);
+            resolve(getDomainFromUrl(strUrl));
         });
     });
 }
@@ -72,6 +132,7 @@ function getCurrentDateForId() {
     return today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate();
 }
 
+// Tracking
 function StartTracking(tabId, domain) {
     // If the same tab switched from one tracked domain to the other,
     // stop tracking it as the old domain
@@ -127,25 +188,23 @@ function StopTracking(tabId) {
 
 // ----------- Extension Events ---------- //
 // Setup
-chrome.runtime.onInstalled.addListener(() => {
+chrome.runtime.onInstalled.addListener(async () => {
     chrome.storage.sync.clear();
 
     // Set initial settings
-    Settings = {
+    Settings.Update({
         onlyTrackActiveTab: true,
         domains: [
             'www.facebook.com',
             'twitter.com',
-            'reddit.com',
-            'instagram.com'
+            'www.reddit.com',
+            'www.instagram.com'
         ]
-    };
+    });
+
+    await Settings.Save();
 
     TrackedDomains = ConstructTrackedDomains(Settings);
-
-    chrome.storage.sync.set({
-        'settings': Settings
-    });
 
     console.log('----- STATUS: Installed');
 });
@@ -153,8 +212,8 @@ chrome.runtime.onInstalled.addListener(() => {
 // Startup
 chrome.runtime.onStartup.addListener(() => {
     // Load URLs from storage
-    chrome.storage.sync.get('settings', (items) => {
-        Settings = items;
+    chrome.storage.sync.get('settings', items => {
+        Settings.Update(items['settings']);
         TrackedDomains = ConstructTrackedDomains(Settings);
 
         console.log('----- STATUS: Started')
@@ -166,12 +225,12 @@ chrome.storage.onChanged.addListener((changes, areaName) => {
     // This block updates settings
     if (changes.hasOwnProperty('settings')) {
         // Get the new settings values
-        Settings = changes['settings'].newValue || changes['settings'].oldValue;
+        Settings.Update(changes['settings'].newValue || changes['settings'].oldValue);
 
         // Update the tracking info
         // Delete removed domains
         for (const domain in TrackedDomains)
-            if (TrackedDomains.hasOwnProperty(domain) && Settings.domains.includes(domain) === false)
+            if (TrackedDomains.hasOwnProperty(domain) && Settings.HasDomain(domain) === false)
                 delete TrackedDomains[domain];
 
         // Setup added domains
@@ -196,7 +255,7 @@ chrome.tabs.onActivated.addListener(async activeInfo => {
         StopTracking(PreviousTrackedTab.Id);
 
     // Only track if domain is in settings list and domain has changed
-    if (Settings.domains.includes(domain) === true)
+    if (Settings.HasDomain(domain) === true)
         StartTracking(activeInfo.tabId, domain);
 });
 
@@ -207,7 +266,7 @@ chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
     let domain = await getDomainFromTabIdAsync(tabId);
 
     // Only track if domain is in settings list
-    if (Settings.domains.includes(domain) === true)
+    if (Settings.HasDomain(domain) === true)
         StartTracking(tabId, domain);
     else
         StopTracking(tabId);
@@ -224,10 +283,12 @@ chrome.windows.onFocusChanged.addListener(async windowId => {
     console.log('--- onFocusChanged');
 
     // Get tabId and domain
-    let tabId = await chrome.tabs.queryAsync({
+    let tabs = await chrome.tabs.queryAsync({
         active: true,
         windowId: windowId
     });
+
+    let tabId = tabs[0].id;
 
     // We're tracking active tab
     if (Settings.onlyTrackActiveTab === true) {
@@ -236,7 +297,7 @@ chrome.windows.onFocusChanged.addListener(async windowId => {
         // Tracking active tab and the focus is still on a Chrome window
         if (windowId !== chrome.windows.WINDOW_ID_NONE) {
             let domain = await getDomainFromTabIdAsync(tabId);
-            if (Settings.domains.includes(domain) === true)
+            if (Settings.HasDomain(domain) === true)
                 StartTracking(tabId, domain);
         }
     }
