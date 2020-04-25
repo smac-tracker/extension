@@ -1,7 +1,6 @@
 body {
     min-width: 200px;
     min-height: 50px;
-    overflow: hidden;
 }
 
 .panel {
@@ -39,4 +38,37 @@ body {
 .site-count-num{
     font-size: 4rem;
     font-weight: bolder;
+}
+
+.manage-site-container
+{
+    min-height: 300px;
+}
+
+.domains-container{
+    margin: 0.5rem;
+    border: solid black 1px;
+}
+
+.domain-row{
+    background-color: white;
+    padding-top: 0.3rem;
+    padding-bottom: 0.3rem;
+    border-bottom: solid #cce5ff 1px;
+}
+
+.domain-row--delete-button{
+    float: right;
+    padding-right: 0.5rem;
+}
+
+.domain-row--text{
+    padding-left: 0.5rem;
+    font-weight: bold;
+    max-width: 80%;
+    width: 80%;
+}
+
+.add-padding-top{
+    padding-top: 1rem;
 }

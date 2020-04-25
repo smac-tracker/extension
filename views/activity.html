@@ -22,12 +22,15 @@
     <script
         src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 
+    <!-- Chart.js -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+
     <!-- Knockout -->
     <script type="text/javascript" src="/thirdparty/knockout-3.5.1.js"></script>
     <script type="text/javascript" src="/thirdparty/knockout.mapping-latest.js"></script>
 
     <!-- FontAwesome -->
-    <script src="https://use.fontawesome.com/82b4af846a.js"></script>
+    <script src="https://kit.fontawesome.com/f35b244a4d.js" crossorigin="anonymous"></script>
 
     <!-- Local -->
     <script type="text/javascript" src="/lib/activity.js"></script>
@@ -94,30 +97,84 @@
                 <div class="row">
                     <div class="col-lg-6 col-md-12">
                         <label id="start-date-text" for="start-date">Start Date</label>
-                        <div class="input-group date">
+                        <div class="input-group">
                             <input type="text" id="start-date" class="form-control"
                                 data-bind="datepicker: StartDate, datepickerOptions: DatepickerOptions"
                                 aria-labelledby="start-date-text">
-                            <div class="input-group-addon">
-                                <!-- <i class="fas fa-calendar-alt"></i> -->
-                                <span class="glyphicon glyphicon-th"></span>
-                            </div>
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-12">
                         <label for="end-date">End Date</label>
-                        <div class="input-group date">
+                        <div class="input-group">
                             <input type="text" class="form-control" id="end-date"
                                 data-bind="datepicker: EndDate, datepickerOptions: DatepickerOptions">
-                                <div class="input-group-addon">
-                                    <!-- <i class="fas fa-calendar-alt"></i> -->
-                                    <span class="glyphicon glyphicon-th"></span>
-                                </div>
                         </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="btn-group add-padding-top" role="group">
+                            <button type="button" class="btn btn-primary">Pie</button>
+                            <button type="button" class="btn btn-secondary">Bar</button>
+                            <button type="button" class="btn btn-secondary">Bar [Time]</button>
+                          </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <canvas class="add-padding-top" data-bind="chart: { type: 'pie', data: ChartData }"></canvas>
                     </div>
                 </div>
             </div>
             <div class="col-lg-6 col-sm-12">
+                <div class="panel green manage-site-container">
+                    <div class="row">
+                        <div class="col">
+                            <h4>Manage tracked sites</h4>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col add-padding-top">
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" placeholder="Add domain to track" aria-label="Add domain">
+                                <div class="input-group-append">
+                                  <button class="btn btn-outline-primary" type="button">Add</button>
+                                </div>
+                              </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="domains-container">
+                                <div class="domain-row">
+                                    <span class="domain-row--text">https://login.microsoftonline.com</span>
+                                    <a href="#" class="domain-row--delete-button">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </a>
+                                </div>
+                                <div class="domain-row">
+                                    <span class="domain-row--text">reddit.com</span>
+                                    <a href="#" class="domain-row--delete-button">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </a>
+                                </div>
+                                <div class="domain-row">
+                                    <span class="domain-row--text">instagram.com</span>
+                                    <a href="#" class="domain-row--delete-button">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </a>
+                                </div>
+                                <div class="domain-row">
+                                    <span class="domain-row--text">twitter.com</span>
+                                    <a href="#" class="domain-row--delete-button">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
             </div>
         </div>
     </div>
