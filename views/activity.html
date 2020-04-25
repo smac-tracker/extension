@@ -50,7 +50,7 @@
 <body>
     <nav class="navbar navbar-dark bg-dark">
         <div class="navbar-brand" href="#">
-            <img src="/logo.png" width="30" height="30" alt="SMAC logo">
+            <img src="/logo.png" width="25" height="25" alt="SMAC logo">
             <span class="navbar-brand mb-0 h1">SMACTracker</span>
         </div>
     </nav>
@@ -136,9 +136,9 @@
                     <div class="row">
                         <div class="col add-padding-top">
                             <div class="input-group mb-3">
-                                <input type="text" class="form-control" placeholder="Add domain to track" aria-label="Add domain">
+                                <input type="text" class="form-control" placeholder="Add domain to track" data-bind="value: NewDomain">
                                 <div class="input-group-append">
-                                  <button class="btn btn-outline-primary" type="button">Add</button>
+                                  <button class="btn btn-outline-primary" type="button" data-bind="click: AddDomain">Add</button>
                                 </div>
                               </div>
                         </div>
@@ -146,30 +146,14 @@
                     <div class="row">
                         <div class="col">
                             <div class="domains-container">
+                                <!-- ko foreach: Domains -->
                                 <div class="domain-row">
-                                    <span class="domain-row--text">https://login.microsoftonline.com</span>
-                                    <a href="#" class="domain-row--delete-button">
+                                    <span class="domain-row--text" data-bind="text: $data"></span>
+                                    <a href="#" data-bind="click: $root.DeleteDomain" class="domain-row--delete-button">
                                         <i class="fas fa-trash-alt"></i>
                                     </a>
                                 </div>
-                                <div class="domain-row">
-                                    <span class="domain-row--text">reddit.com</span>
-                                    <a href="#" class="domain-row--delete-button">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </a>
-                                </div>
-                                <div class="domain-row">
-                                    <span class="domain-row--text">instagram.com</span>
-                                    <a href="#" class="domain-row--delete-button">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </a>
-                                </div>
-                                <div class="domain-row">
-                                    <span class="domain-row--text">twitter.com</span>
-                                    <a href="#" class="domain-row--delete-button">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </a>
-                                </div>
+                                <!-- /ko -->
                             </div>
                         </div>
                     </div>
