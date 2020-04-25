@@ -3,3 +3,40 @@ body {
     min-height: 50px;
     overflow: hidden;
 }
+
+.panel {
+    margin-top: 1rem;
+    padding: 0.5rem;
+    border-radius: 5px;
+}
+
+.panel.grey {
+    background-color: lightgray;
+}
+
+.panel.gold {
+    background-color: bisque;
+}
+
+.panel.blue{
+    background-color: #cce5ff;
+}
+
+.panel.green{
+    background-color: #d4edda;
+}
+
+.todays-minutes-num{
+    font-size: 3rem;
+    font-weight: bolder;
+}
+
+.consumption-stats-text{
+    font-size: 3rem;
+    font-weight: bolder;
+}
+
+.site-count-num{
+    font-size: 4rem;
+    font-weight: bolder;
+}

@@ -18,6 +18,10 @@
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
 
+    <!-- Datepicker -->
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+
     <!-- Knockout -->
     <script type="text/javascript" src="/thirdparty/knockout-3.5.1.js"></script>
     <script type="text/javascript" src="/thirdparty/knockout.mapping-latest.js"></script>
@@ -33,12 +37,90 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
     <!-- Local -->
     <link rel="stylesheet" type="text/css" href="/css/custom.css">
 
 </head>
+
 <body>
-    
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="navbar-brand" href="#">
+            <img src="/logo.png" width="30" height="30" alt="SMAC logo">
+            <span class="navbar-brand mb-0 h1">SMACTracker</span>
+        </div>
+    </nav>
+    <div class="container-md">
+        <!-- Content here -->
+        <div class="row">
+            <div class="col-lg-6 col-sm-12">
+                <div class="panel grey">
+                    <div class="site-count-area">
+                        <span class="site-count-num">5</span>
+                        <span class="site-count-text"> <i> sites actively tracked</i></span>
+                    </div>
+                </div>
+                <div class="panel bg-light">
+                    <h6>Settings</h6>
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="customCheck1"
+                            data-bind="checked: OnlyTrackActiveTab">
+                        <label class="custom-control-label" for="customCheck1">Track active tabs only</label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-sm-12">
+                <div class="panel gold">
+                    <h5>Today's Usage</h5>
+                    <div class=todays-minute-area>
+                        <span class="todays-minutes-num">144</span>
+                        <span class="todays-minutes-text"> minutes</span>
+                    </div>
+                    <div class="consumption-stats">
+                        <p>Your consumption is <span class="consumption-stats-text">Above Average</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-lg-6 col-sm-12">
+                <div class="row justify-content-center">
+                    <div class="col">
+                        <h3>Activity</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-md-12">
+                        <label id="start-date-text" for="start-date">Start Date</label>
+                        <div class="input-group date">
+                            <input type="text" id="start-date" class="form-control"
+                                data-bind="datepicker: StartDate, datepickerOptions: DatepickerOptions"
+                                aria-labelledby="start-date-text">
+                            <div class="input-group-addon">
+                                <!-- <i class="fas fa-calendar-alt"></i> -->
+                                <span class="glyphicon glyphicon-th"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-12">
+                        <label for="end-date">End Date</label>
+                        <div class="input-group date">
+                            <input type="text" class="form-control" id="end-date"
+                                data-bind="datepicker: EndDate, datepickerOptions: DatepickerOptions">
+                                <div class="input-group-addon">
+                                    <!-- <i class="fas fa-calendar-alt"></i> -->
+                                    <span class="glyphicon glyphicon-th"></span>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-sm-12">
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>
