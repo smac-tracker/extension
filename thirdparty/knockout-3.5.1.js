@@ -44,10 +44,10 @@
                                     var l; c && ("object" === typeof b.classList ?
                                         (l = b.classList[d ? "add" : "remove"], a.a.D(c.match(q), function (a) { l.call(b.classList, a) })) : "string" === typeof b.className.baseVal ? e(b.className, "baseVal", c, d) : e(b, "className", c, d))
                                 }, Bb: function (b, c) { var d = a.a.f(c); if (null === d || d === n) d = ""; var e = a.h.firstChild(b); !e || 3 != e.nodeType || a.h.nextSibling(e) ? a.h.va(b, [b.ownerDocument.createTextNode(d)]) : e.data = d; a.a.Ad(b) }, Yc: function (a, b) {
-                                a.name = b; if (7 >= p) try {
-                                    var c = a.name.replace(/[&<>'"]/g, function (a) { return "&#" + a.charCodeAt(0) + ";" }); a.mergeAttributes(w.createElement("<input name='" +
-                                        c + "'/>"), !1)
-                                } catch (d) { }
+                                    a.name = b; if (7 >= p) try {
+                                        var c = a.name.replace(/[&<>'"]/g, function (a) { return "&#" + a.charCodeAt(0) + ";" }); a.mergeAttributes(w.createElement("<input name='" +
+                                            c + "'/>"), !1)
+                                    } catch (d) { }
                                 }, Ad: function (a) { 9 <= p && (a = 1 == a.nodeType ? a : a.parentNode, a.style && (a.style.zoom = a.style.zoom)) }, wd: function (a) { if (p) { var b = a.style.width; a.style.width = 0; a.style.width = b } }, Pd: function (b, c) { b = a.a.f(b); c = a.a.f(c); for (var d = [], e = b; e <= c; e++)d.push(e); return d }, la: function (a) { for (var b = [], c = 0, d = a.length; c < d; c++)b.push(a[c]); return b }, Da: function (a) { return h ? Symbol(a) : a }, Zd: 6 === p, $d: 7 === p, W: p, Lc: function (b, c) {
                                     for (var d = a.a.la(b.getElementsByTagName("input")).concat(a.a.la(b.getElementsByTagName("textarea"))),
                                         e = "string" == typeof c ? function (a) { return a.name === c } : function (a) { return c.test(a.name) }, l = [], k = d.length - 1; 0 <= k; k--)e(d[k]) && l.push(d[k]); return l
@@ -111,25 +111,25 @@
                                     }
                                 } function c() { b(); h = f = e.length = 0 } var d, e = [], f = 0, g = 1, h = 0; A.MutationObserver ? d = function (a) { var b = w.createElement("div"); (new MutationObserver(a)).observe(b, { attributes: !0 }); return function () { b.classList.toggle("foo") } }(c) : d = w && "onreadystatechange" in w.createElement("script") ? function (a) {
                                     var b = w.createElement("script"); b.onreadystatechange = function () {
-                                    b.onreadystatechange = null; w.documentElement.removeChild(b);
+                                        b.onreadystatechange = null; w.documentElement.removeChild(b);
                                         b = null; a()
                                     }; w.documentElement.appendChild(b)
                                 } : function (a) { setTimeout(a, 0) }; return { scheduler: d, zb: function (b) { f || a.na.scheduler(c); e[f++] = b; return g++ }, cancel: function (a) { a = a - (g - f); a >= h && a < f && (e[a] = null) }, resetForTesting: function () { var a = f - h; h = f = e.length = 0; return a }, Sd: b }
                             }(); a.b("tasks", a.na); a.b("tasks.schedule", a.na.zb); a.b("tasks.runEarly", a.na.Sd); a.Ta = {
                                 throttle: function (b, c) {
-                                b.throttleEvaluation = c; var d = null; return a.$({
-                                    read: b, write: function (e) {
-                                        clearTimeout(d); d = a.a.setTimeout(function () { b(e) },
-                                            c)
-                                    }
-                                })
+                                    b.throttleEvaluation = c; var d = null; return a.$({
+                                        read: b, write: function (e) {
+                                            clearTimeout(d); d = a.a.setTimeout(function () { b(e) },
+                                                c)
+                                        }
+                                    })
                                 }, rateLimit: function (a, c) { var d, e, f; "number" == typeof c ? d = c : (d = c.timeout, e = c.method); a.Hb = !1; f = "function" == typeof e ? e : "notifyWhenChangesStop" == e ? Y : X; a.ub(function (a) { return f(a, d, c) }) }, deferred: function (b, c) {
                                     if (!0 !== c) throw Error("The 'deferred' extender only accepts the value 'true', because it is not supported to turn deferral off once enabled."); b.Hb || (b.Hb = !0, b.ub(function (c) {
                                         var e, f = !1; return function () {
                                             if (!f) {
                                                 a.na.cancel(e); e = a.na.zb(c); try { f = !0, b.notifySubscribers(n, "dirty") } finally {
                                                     f =
-                                                    !1
+                                                        !1
                                                 }
                                             }
                                         }
@@ -173,14 +173,14 @@
                 }; a.b("observableArray", a.Ha); a.b("isObservableArray", a.Pc); a.Ta.trackArrayChanges = function (b, c) {
                     function d() { function c() { if (m) { var d = [].concat(b.v() || []), e; if (b.Wa("arrayChange")) { if (!f || 1 < m) f = a.a.Pb(k, d, b.Ob); e = f } k = d; f = null; m = 0; e && e.length && b.notifySubscribers(e, "arrayChange") } } e ? c() : (e = !0, h = b.subscribe(function () { ++m }, null, "spectate"), k = [].concat(b.v() || []), f = null, g = b.subscribe(c)) } b.Ob = {}; c && "object" == typeof c && a.a.extend(b.Ob, c); b.Ob.sparse = !0; if (!b.zc) {
                         var e = !1, f = null, g, h, m = 0,
-                        k, l = b.Qa, p = b.hb; b.Qa = function (a) { l && l.call(b, a); "arrayChange" === a && d() }; b.hb = function (a) { p && p.call(b, a); "arrayChange" !== a || b.Wa("arrayChange") || (g && g.s(), h && h.s(), h = g = null, e = !1, k = n) }; b.zc = function (b, c, d) {
-                            function l(a, b, c) { return k[k.length] = { status: a, value: b, index: c } } if (e && !m) {
-                                var k = [], p = b.length, g = d.length, h = 0; switch (c) {
-                                    case "push": h = p; case "unshift": for (c = 0; c < g; c++)l("added", d[c], h + c); break; case "pop": h = p - 1; case "shift": p && l("deleted", b[h], h); break; case "splice": c = Math.min(Math.max(0, 0 > d[0] ? p + d[0] :
-                                        d[0]), p); for (var p = 1 === g ? p : Math.min(c + (d[1] || 0), p), g = c + g - 2, h = Math.max(p, g), U = [], L = [], n = 2; c < h; ++c, ++n)c < p && L.push(l("deleted", b[c], c)), c < g && U.push(l("added", d[n], c)); a.a.Kc(L, U); break; default: return
-                                }f = k
+                            k, l = b.Qa, p = b.hb; b.Qa = function (a) { l && l.call(b, a); "arrayChange" === a && d() }; b.hb = function (a) { p && p.call(b, a); "arrayChange" !== a || b.Wa("arrayChange") || (g && g.s(), h && h.s(), h = g = null, e = !1, k = n) }; b.zc = function (b, c, d) {
+                                function l(a, b, c) { return k[k.length] = { status: a, value: b, index: c } } if (e && !m) {
+                                    var k = [], p = b.length, g = d.length, h = 0; switch (c) {
+                                        case "push": h = p; case "unshift": for (c = 0; c < g; c++)l("added", d[c], h + c); break; case "pop": h = p - 1; case "shift": p && l("deleted", b[h], h); break; case "splice": c = Math.min(Math.max(0, 0 > d[0] ? p + d[0] :
+                                            d[0]), p); for (var p = 1 === g ? p : Math.min(c + (d[1] || 0), p), g = c + g - 2, h = Math.max(p, g), U = [], L = [], n = 2; c < h; ++c, ++n)c < p && L.push(l("deleted", b[c], c)), c < g && U.push(l("added", d[n], c)); a.a.Kc(L, U); break; default: return
+                                    }f = k
+                                }
                             }
-                        }
                     }
                 }; var r = a.a.Da("_state"); a.o = a.$ = function (b, c, d) {
                     function e() {
@@ -207,14 +207,14 @@
                 }, da = {
                     Qa: function (b) {
                         var c = this, d = c[r]; if (!d.ra && d.J && "change" == b) {
-                        d.J = !1; if (d.sa || c.Xa()) d.I = null, d.V =
-                            0, c.ha() && c.Gb(); else { var e = []; a.a.P(d.I, function (a, b) { e[b.Ka] = a }); a.a.D(e, function (a, b) { var e = d.I[a], m = c.$c(e.da); m.Ka = b; m.La = e.La; d.I[a] = m }); c.Xa() && c.ha() && c.Gb() } d.ra || c.notifySubscribers(d.X, "awake")
+                            d.J = !1; if (d.sa || c.Xa()) d.I = null, d.V =
+                                0, c.ha() && c.Gb(); else { var e = []; a.a.P(d.I, function (a, b) { e[b.Ka] = a }); a.a.D(e, function (a, b) { var e = d.I[a], m = c.$c(e.da); m.Ka = b; m.La = e.La; d.I[a] = m }); c.Xa() && c.ha() && c.Gb() } d.ra || c.notifySubscribers(d.X, "awake")
                         }
                     }, hb: function (b) { var c = this[r]; c.ra || "change" != b || this.Wa("change") || (a.a.P(c.I, function (a, b) { b.s && (c.I[a] = { da: b.da, Ka: b.Ka, La: b.La }, b.s()) }), c.J = !0, this.notifySubscribers(n, "asleep")) }, ob: function () { var b = this[r]; b.J && (b.sa || this.Xa()) && this.ha(); return a.T.fn.ob.call(this) }
                 }, ea = {
                     Qa: function (a) {
-                    "change" !=
-                        a && "beforeChange" != a || this.v()
+                        "change" !=
+                            a && "beforeChange" != a || this.v()
                     }
                 }; a.a.Ba && a.a.setPrototypeOf(C, a.T.fn); var N = a.ta.Ma; C[N] = a.o; a.Oc = function (a) { return "function" == typeof a && a[N] === C[N] }; a.Fd = function (b) { return a.Oc(b) && b[r] && b[r].wb }; a.b("computed", a.o); a.b("dependentObservable", a.o); a.b("isComputed", a.Oc); a.b("isPureComputed", a.Fd); a.b("computed.fn", C); a.L(C, "peek", C.v); a.L(C, "dispose", C.s); a.L(C, "isActive", C.ja); a.L(C, "getDependenciesCount", C.qa); a.L(C, "getDependencies", C.Va); a.xb = function (b, c) {
                     if ("function" === typeof b) return a.o(b,
@@ -234,19 +234,19 @@
                         }, get: function (b) { b = a.a.A(this.keys, b); return 0 <= b ? this.values[b] : n }
                     }
                 })(); a.b("toJS", a.ad); a.b("toJSON", a.toJSON); a.Wd = function (b, c, d) { function e(c) { var e = a.xb(b, d).extend({ ma: "always" }), h = e.subscribe(function (a) { a && (h.s(), c(a)) }); e.notifySubscribers(e.v()); return h } return "function" !== typeof Promise || c ? e(c.bind(d)) : new Promise(e) }; a.b("when", a.Wd); (function () {
-                a.w = {
-                    M: function (b) {
-                        switch (a.a.R(b)) {
-                            case "option": return !0 === b.__ko__hasDomDataOptionValue__ ?
-                                a.a.g.get(b, a.c.options.$b) : 7 >= a.a.W ? b.getAttributeNode("value") && b.getAttributeNode("value").specified ? b.value : b.text : b.value; case "select": return 0 <= b.selectedIndex ? a.w.M(b.options[b.selectedIndex]) : n; default: return b.value
-                        }
-                    }, cb: function (b, c, d) {
-                        switch (a.a.R(b)) {
-                            case "option": "string" === typeof c ? (a.a.g.set(b, a.c.options.$b, n), "__ko__hasDomDataOptionValue__" in b && delete b.__ko__hasDomDataOptionValue__, b.value = c) : (a.a.g.set(b, a.c.options.$b, c), b.__ko__hasDomDataOptionValue__ = !0, b.value = "number" ===
-                                typeof c ? c : ""); break; case "select": if ("" === c || null === c) c = n; for (var e = -1, f = 0, g = b.options.length, h; f < g; ++f)if (h = a.w.M(b.options[f]), h == c || "" === h && c === n) { e = f; break } if (d || 0 <= e || c === n && 1 < b.size) b.selectedIndex = e, 6 === a.a.W && a.a.setTimeout(function () { b.selectedIndex = e }, 0); break; default: if (null === c || c === n) c = ""; b.value = c
+                    a.w = {
+                        M: function (b) {
+                            switch (a.a.R(b)) {
+                                case "option": return !0 === b.__ko__hasDomDataOptionValue__ ?
+                                    a.a.g.get(b, a.c.options.$b) : 7 >= a.a.W ? b.getAttributeNode("value") && b.getAttributeNode("value").specified ? b.value : b.text : b.value; case "select": return 0 <= b.selectedIndex ? a.w.M(b.options[b.selectedIndex]) : n; default: return b.value
+                            }
+                        }, cb: function (b, c, d) {
+                            switch (a.a.R(b)) {
+                                case "option": "string" === typeof c ? (a.a.g.set(b, a.c.options.$b, n), "__ko__hasDomDataOptionValue__" in b && delete b.__ko__hasDomDataOptionValue__, b.value = c) : (a.a.g.set(b, a.c.options.$b, c), b.__ko__hasDomDataOptionValue__ = !0, b.value = "number" ===
+                                    typeof c ? c : ""); break; case "select": if ("" === c || null === c) c = n; for (var e = -1, f = 0, g = b.options.length, h; f < g; ++f)if (h = a.w.M(b.options[f]), h == c || "" === h && c === n) { e = f; break } if (d || 0 <= e || c === n && 1 < b.size) b.selectedIndex = e, 6 === a.a.W && a.a.setTimeout(function () { b.selectedIndex = e }, 0); break; default: if (null === c || c === n) c = ""; b.value = c
+                            }
                         }
                     }
-                }
                 })(); a.b("selectExtensions", a.w); a.b("selectExtensions.readValue", a.w.M); a.b("selectExtensions.writeValue", a.w.cb); a.m = function () {
                     function b(b) {
                         b = a.a.Db(b); 123 === b.charCodeAt(0) && (b = b.slice(1,
@@ -295,19 +295,19 @@
                             }
                         }
                     })(); a.b("virtualElements", a.h); a.b("virtualElements.allowedBindings", a.h.ea); a.b("virtualElements.emptyNode", a.h.Ea); a.b("virtualElements.insertAfter", a.h.Wb); a.b("virtualElements.prepend", a.h.Vc); a.b("virtualElements.setDomNodeChildren", a.h.va); (function () {
-                    a.ga = function () { this.nd = {} }; a.a.extend(a.ga.prototype, {
-                        nodeHasBindings: function (b) {
-                            switch (b.nodeType) {
-                                case 1: return null !=
-                                    b.getAttribute("data-bind") || a.j.getComponentNameForNode(b); case 8: return a.h.Cd(b); default: return !1
-                            }
-                        }, getBindings: function (b, c) { var d = this.getBindingsString(b, c), d = d ? this.parseBindingsString(d, c, b) : null; return a.j.tc(d, b, c, !1) }, getBindingAccessors: function (b, c) { var d = this.getBindingsString(b, c), d = d ? this.parseBindingsString(d, c, b, { valueAccessors: !0 }) : null; return a.j.tc(d, b, c, !0) }, getBindingsString: function (b) { switch (b.nodeType) { case 1: return b.getAttribute("data-bind"); case 8: return a.h.Vd(b); default: return null } },
-                        parseBindingsString: function (b, c, d, e) { try { var f = this.nd, g = b + (e && e.valueAccessors || ""), h; if (!(h = f[g])) { var m, k = "with($context){with($data||{}){return{" + a.m.vb(b, e) + "}}}"; m = new Function("$context", "$element", k); h = f[g] = m } return h(c, d) } catch (l) { throw l.message = "Unable to parse bindings.\nBindings value: " + b + "\nMessage: " + l.message, l; } }
-                    }); a.ga.instance = new a.ga
+                        a.ga = function () { this.nd = {} }; a.a.extend(a.ga.prototype, {
+                            nodeHasBindings: function (b) {
+                                switch (b.nodeType) {
+                                    case 1: return null !=
+                                        b.getAttribute("data-bind") || a.j.getComponentNameForNode(b); case 8: return a.h.Cd(b); default: return !1
+                                }
+                            }, getBindings: function (b, c) { var d = this.getBindingsString(b, c), d = d ? this.parseBindingsString(d, c, b) : null; return a.j.tc(d, b, c, !1) }, getBindingAccessors: function (b, c) { var d = this.getBindingsString(b, c), d = d ? this.parseBindingsString(d, c, b, { valueAccessors: !0 }) : null; return a.j.tc(d, b, c, !0) }, getBindingsString: function (b) { switch (b.nodeType) { case 1: return b.getAttribute("data-bind"); case 8: return a.h.Vd(b); default: return null } },
+                            parseBindingsString: function (b, c, d, e) { try { var f = this.nd, g = b + (e && e.valueAccessors || ""), h; if (!(h = f[g])) { var m, k = "with($context){with($data||{}){return{" + a.m.vb(b, e) + "}}}"; m = new Function("$context", "$element", k); h = f[g] = m } return h(c, d) } catch (l) { throw l.message = "Unable to parse bindings.\nBindings value: " + b + "\nMessage: " + l.message, l; } }
+                        }); a.ga.instance = new a.ga
                     })(); a.b("bindingProvider", a.ga); (function () {
                         function b(b) { var c = (b = a.a.g.get(b, z)) && b.N; c && (b.N = null, c.Tc()) } function c(c, d, e) {
-                        this.node = c; this.yc =
-                            d; this.kb = []; this.H = !1; d.N || a.a.K.za(c, b); e && e.N && (e.N.kb.push(c), this.Kb = e)
+                            this.node = c; this.yc =
+                                d; this.kb = []; this.H = !1; d.N || a.a.K.za(c, b); e && e.N && (e.N.kb.push(c), this.Kb = e)
                         } function d(a) { return function () { return a } } function e(a) { return a() } function f(b) { return a.a.Ga(a.u.G(b), function (a, c) { return function () { return b()[c] } }) } function g(b, c, e) { return "function" === typeof b ? f(b.bind(null, c, e)) : a.a.Ga(b, d) } function h(a, b) { return f(this.getBindings.bind(this, a, b)) } function m(b, c) {
                             var d = a.h.firstChild(c); if (d) {
                                 var e, f = a.ga.instance, l = f.preprocessNode; if (l) {
@@ -345,19 +345,19 @@
                                     b, l.$data = f); d && (l[d] = f); e && e(l, c, f); if (c && c[t] && !a.S.o().Vb(c[t])) c[t](); m && (l[B] = m); return l.$data
                             } var l = this, g = b === J, h = g ? n : b, p = "function" == typeof h && !a.O(h), q, m = f && f.dataDependency; f && f.exportDependencies ? k() : (q = a.xb(k), q.v(), q.ja() ? q.equalityComparer = null : l[t] = n)
                         }; a.fa.prototype.createChildContext = function (b, c, d, e) {
-                        !e && c && "object" == typeof c && (e = c, c = e.as, d = e.extend); if (c && e && e.noChildContext) { var f = "function" == typeof b && !a.O(b); return new a.fa(J, this, null, function (a) { d && d(a); a[c] = f ? b() : b }, e) } return new a.fa(b,
-                            this, c, function (a, b) { a.$parentContext = b; a.$parent = b.$data; a.$parents = (b.$parents || []).slice(0); a.$parents.unshift(a.$parent); d && d(a) }, e)
+                            !e && c && "object" == typeof c && (e = c, c = e.as, d = e.extend); if (c && e && e.noChildContext) { var f = "function" == typeof b && !a.O(b); return new a.fa(J, this, null, function (a) { d && d(a); a[c] = f ? b() : b }, e) } return new a.fa(b,
+                                this, c, function (a, b) { a.$parentContext = b; a.$parent = b.$data; a.$parents = (b.$parents || []).slice(0); a.$parents.unshift(a.$parent); d && d(a) }, e)
                         }; a.fa.prototype.extend = function (b, c) { return new a.fa(J, this, null, function (c) { a.a.extend(c, "function" == typeof b ? b(c) : b) }, c) }; var z = a.a.g.Z(); c.prototype.Tc = function () { this.Kb && this.Kb.N && this.Kb.N.sd(this.node) }; c.prototype.sd = function (b) { a.a.Pa(this.kb, b); !this.kb.length && this.H && this.Cc() }; c.prototype.Cc = function () {
-                        this.H = !0; this.yc.N && !this.kb.length && (this.yc.N =
-                            null, a.a.K.yb(this.node, b), a.i.ma(this.node, a.i.pa), this.Tc())
+                            this.H = !0; this.yc.N && !this.kb.length && (this.yc.N =
+                                null, a.a.K.yb(this.node, b), a.i.ma(this.node, a.i.pa), this.Tc())
                         }; a.i = {
                             H: "childrenComplete", pa: "descendantsComplete", subscribe: function (b, c, d, e, f) { var k = a.a.g.Ub(b, z, {}); k.Fa || (k.Fa = new a.T); f && f.notifyImmediately && k.Zb[c] && a.u.G(d, e, [b]); return k.Fa.subscribe(d, e, c) }, ma: function (b, c) {
                                 var d = a.a.g.get(b, z); if (d && (d.Zb[c] = !0, d.Fa && d.Fa.notifySubscribers(b, c), c == a.i.H)) if (d.N) d.N.Cc(); else if (d.N === n && d.Fa && d.Fa.Wa(a.i.pa)) throw Error("descendantsComplete event not supported for bindings on this node");
                             }, Cb: function (b, d) { var e = a.a.g.Ub(b, z, {}); e.N || (e.N = new c(b, e, d[x])); return d[x] == e ? d : d.extend(function (a) { a[x] = e }) }
                         }; a.Td = function (b) { return (b = a.a.g.get(b, z)) && b.context }; a.ib = function (b, c, d) { 1 === b.nodeType && a.h.Sc(b); return p(b, c, q(d)) }; a.ld = function (b, c, d) { d = q(d); return a.ib(b, g(c, d, b), d) }; a.Oa = function (a, b) { 1 !== b.nodeType && 8 !== b.nodeType || m(q(a), b) }; a.vc = function (a, b, c) {
-                        !v && A.jQuery && (v = A.jQuery); if (2 > arguments.length) {
-                            if (b = w.body, !b) throw Error("ko.applyBindings: could not find document.body; has the document been loaded?");
-                        } else if (!b || 1 !== b.nodeType && 8 !== b.nodeType) throw Error("ko.applyBindings: first parameter should be your view model; second parameter should be a DOM node"); k(q(a, c), b)
+                            !v && A.jQuery && (v = A.jQuery); if (2 > arguments.length) {
+                                if (b = w.body, !b) throw Error("ko.applyBindings: could not find document.body; has the document been loaded?");
+                            } else if (!b || 1 !== b.nodeType && 8 !== b.nodeType) throw Error("ko.applyBindings: first parameter should be your view model; second parameter should be a DOM node"); k(q(a, c), b)
                         }; a.Dc = function (b) { return !b || 1 !== b.nodeType && 8 !== b.nodeType ? n : a.Td(b) }; a.Ec = function (b) { return (b = a.Dc(b)) ? b.$data : n }; a.b("bindingHandlers", a.c); a.b("bindingEvent", a.i); a.b("bindingEvent.subscribe", a.i.subscribe); a.b("bindingEvent.startPossiblyAsyncContentBinding", a.i.Cb); a.b("applyBindings", a.vc); a.b("applyBindingsToDescendants", a.Oa);
                         a.b("applyBindingAccessorsToNode", a.ib); a.b("applyBindingsToNode", a.ld); a.b("contextFor", a.Dc); a.b("dataFor", a.Ec)
                     })(); (function (b) {
@@ -380,7 +380,7 @@
                             else if ("function" === typeof b[m]) d(b[m]); else if ("instance" in b) { var e = b.instance; d(function () { return e }) } else "viewModel" in b ? c(a, b.viewModel, d) : a("Unknown viewModel value: " + b)
                         } function d(b) { switch (a.a.R(b)) { case "script": return a.a.ua(b.text); case "textarea": return a.a.ua(b.value); case "template": if (e(b.content)) return a.a.Ca(b.content.childNodes) }return a.a.Ca(b.childNodes) } function e(a) { return A.DocumentFragment ? a instanceof DocumentFragment : a && 11 === a.nodeType } function f(a, b, c) {
                             "string" === typeof b.require ?
-                            T || A.require ? (T || A.require)([b.require], function (a) { a && "object" === typeof a && a.Xd && a["default"] && (a = a["default"]); c(a) }) : a("Uses require, but no AMD loader is present") : c(b)
+                                T || A.require ? (T || A.require)([b.require], function (a) { a && "object" === typeof a && a.Xd && a["default"] && (a = a["default"]); c(a) }) : a("Uses require, but no AMD loader is present") : c(b)
                         } function g(a) { return function (b) { throw Error("Component '" + a + "': " + b); } } var h = {}; a.j.register = function (b, c) { if (!c) throw Error("Invalid configuration for " + b); if (a.j.tb(b)) throw Error("Component " + b + " is already registered"); h[b] = c }; a.j.tb = function (a) { return Object.prototype.hasOwnProperty.call(h, a) }; a.j.unregister = function (b) {
                             delete h[b];
                             a.j.Bc(b)
@@ -457,12 +457,12 @@
                                 }
                             }; a.m.wa.hasfocus = !0; a.c.hasFocus = a.c.hasfocus; a.m.wa.hasFocus = "hasfocus"; a.c.html = { init: function () { return { controlsDescendantBindings: !0 } }, update: function (b, c) { a.a.fc(b, c()) } }; (function () {
                                 function b(b, d, e) {
-                                a.c[b] = {
-                                    init: function (b, c, h, m, k) {
-                                        var l, p, q = {}, t, x, n; if (d) { m = h.get("as"); var u = h.get("noChildContext"); n = !(m && u); q = { as: m, noChildContext: u, exportDependencies: n } } x = (t =
-                                            "render" == h.get("completeOn")) || h.has(a.i.pa); a.o(function () { var h = a.a.f(c()), m = !e !== !h, u = !p, r; if (n || m !== l) { x && (k = a.i.Cb(b, k)); if (m) { if (!d || n) q.dataDependency = a.S.o(); r = d ? k.createChildContext("function" == typeof h ? h : c, q) : a.S.qa() ? k.extend(null, q) : k } u && a.S.qa() && (p = a.a.Ca(a.h.childNodes(b), !0)); m ? (u || a.h.va(b, a.a.Ca(p)), a.Oa(r, b)) : (a.h.Ea(b), t || a.i.ma(b, a.i.H)); l = m } }, null, { l: b }); return { controlsDescendantBindings: !0 }
-                                    }
-                                }; a.m.Ra[b] = !1; a.h.ea[b] = !0
+                                    a.c[b] = {
+                                        init: function (b, c, h, m, k) {
+                                            var l, p, q = {}, t, x, n; if (d) { m = h.get("as"); var u = h.get("noChildContext"); n = !(m && u); q = { as: m, noChildContext: u, exportDependencies: n } } x = (t =
+                                                "render" == h.get("completeOn")) || h.has(a.i.pa); a.o(function () { var h = a.a.f(c()), m = !e !== !h, u = !p, r; if (n || m !== l) { x && (k = a.i.Cb(b, k)); if (m) { if (!d || n) q.dataDependency = a.S.o(); r = d ? k.createChildContext("function" == typeof h ? h : c, q) : a.S.qa() ? k.extend(null, q) : k } u && a.S.qa() && (p = a.a.Ca(a.h.childNodes(b), !0)); m ? (u || a.h.va(b, a.a.Ca(p)), a.Oa(r, b)) : (a.h.Ea(b), t || a.i.ma(b, a.i.H)); l = m } }, null, { l: b }); return { controlsDescendantBindings: !0 }
+                                        }
+                                    }; a.m.Ra[b] = !1; a.h.ea[b] = !0
                                 } b("if"); b("ifnot", !1, !0); b("with", !0)
                             })(); a.c.let = {
                                 init: function (b,
@@ -476,8 +476,8 @@
                                         }
                                     } var h = b.multiple, m = 0 != b.length && h ? b.scrollTop : null, k = a.a.f(c()), l = d.get("valueAllowUnset") && d.has("value"), p = d.get("optionsIncludeDestroyed"); c = {}; var q, t = []; l || (h ? t = a.a.Mb(e(), a.w.M) : 0 <= b.selectedIndex && t.push(a.w.M(b.options[b.selectedIndex]))); k && ("undefined" == typeof k.length && (k = [k]), q = a.a.jb(k, function (b) { return p || b === n || null === b || !a.a.f(b._destroy) }), d.has("optionsCaption") && (k = a.a.f(d.get("optionsCaption")), null !==
                                         k && k !== n && q.unshift(Q))); var x = !1; c.beforeRemove = function (a) { b.removeChild(a) }; k = g; d.has("optionsAfterRender") && "function" == typeof d.get("optionsAfterRender") && (k = function (b, c) { g(0, c); a.u.G(d.get("optionsAfterRender"), null, [c[0], b !== Q ? b : n]) }); a.a.ec(b, q, function (c, e, g) {
-                                        g.length && (t = !l && g[0].selected ? [a.w.M(g[0])] : [], x = !0); e = b.ownerDocument.createElement("option"); c === Q ? (a.a.Bb(e, d.get("optionsCaption")), a.w.cb(e, n)) : (g = f(c, d.get("optionsValue"), c), a.w.cb(e, a.a.f(g)), c = f(c, d.get("optionsText"), g),
-                                            a.a.Bb(e, c)); return [e]
+                                            g.length && (t = !l && g[0].selected ? [a.w.M(g[0])] : [], x = !0); e = b.ownerDocument.createElement("option"); c === Q ? (a.a.Bb(e, d.get("optionsCaption")), a.w.cb(e, n)) : (g = f(c, d.get("optionsValue"), c), a.w.cb(e, a.a.f(g)), c = f(c, d.get("optionsText"), g),
+                                                a.a.Bb(e, c)); return [e]
                                         }, c, k); if (!l) { var B; h ? B = t.length && e().length < t.length : B = t.length && 0 <= b.selectedIndex ? a.w.M(b.options[b.selectedIndex]) !== t[0] : t.length || 0 <= b.selectedIndex; B && a.u.G(a.a.Fb, null, [b, "change"]) } (l || a.S.Ya()) && a.i.ma(b, a.i.H); a.a.wd(b); m && 20 < Math.abs(m - b.scrollTop) && (b.scrollTop = m)
                                 }
                             }; a.c.options.$b = a.a.g.Z(); a.c.selectedOptions = {
@@ -496,8 +496,8 @@
                                 init: function (b, c, d, e, f) {
                                     if ("function" != typeof c()) throw Error("The value for a submit binding must be a function"); a.a.B(b, "submit", function (a) {
                                         var d, e = c(); try { d = e.call(f.$data, b) } finally {
-                                        !0 !== d && (a.preventDefault ?
-                                            a.preventDefault() : a.returnValue = !1)
+                                            !0 !== d && (a.preventDefault ?
+                                                a.preventDefault() : a.returnValue = !1)
                                         }
                                     })
                                 }
@@ -538,18 +538,18 @@
                     } var c = /(<([a-z]+\d*)(?:\s+(?!data-bind\s*=\s*)[a-z0-9\-]+(?:=(?:\"[^\"]*\"|\'[^\']*\'|[^>]*))?)*\s+)data-bind\s*=\s*(["'])([\s\S]*?)\3/gi,
                         d = /\x3c!--\s*ko\b\s*([\s\S]*?)\s*--\x3e/g; return { xd: function (b, c, d) { c.isTemplateRewritten(b, d) || c.rewriteTemplate(b, function (b) { return a.kc.Ld(b, c) }, d) }, Ld: function (a, f) { return a.replace(c, function (a, c, d, e, l) { return b(l, c, d, f) }).replace(d, function (a, c) { return b(c, "\x3c!-- ko --\x3e", "#comment", f) }) }, md: function (b, c) { return a.aa.Xb(function (d, h) { var m = d.nextSibling; m && m.nodeName.toLowerCase() === c && a.ib(m, b, h) }) } }
                 }(); a.b("__tr_ambtns", a.kc.md); (function () {
-                a.C = {}; a.C.F = function (b) {
-                    if (this.F = b) {
-                        var c =
-                            a.a.R(b); this.ab = "script" === c ? 1 : "textarea" === c ? 2 : "template" == c && b.content && 11 === b.content.nodeType ? 3 : 4
-                    }
-                }; a.C.F.prototype.text = function () { var b = 1 === this.ab ? "text" : 2 === this.ab ? "value" : "innerHTML"; if (0 == arguments.length) return this.F[b]; var c = arguments[0]; "innerHTML" === b ? a.a.fc(this.F, c) : this.F[b] = c }; var b = a.a.g.Z() + "_"; a.C.F.prototype.data = function (c) { if (1 === arguments.length) return a.a.g.get(this.F, b + c); a.a.g.set(this.F, b + c, arguments[1]) }; var c = a.a.g.Z(); a.C.F.prototype.nodes = function () {
-                    var b = this.F;
-                    if (0 == arguments.length) { var e = a.a.g.get(b, c) || {}, f = e.lb || (3 === this.ab ? b.content : 4 === this.ab ? b : n); if (!f || e.jd) { var g = this.text(); g && g !== e.bb && (f = a.a.Md(g, b.ownerDocument), a.a.g.set(b, c, { lb: f, bb: g, jd: !0 })) } return f } e = arguments[0]; this.ab !== n && this.text(""); a.a.g.set(b, c, { lb: e })
-                }; a.C.ia = function (a) { this.F = a }; a.C.ia.prototype = new a.C.F; a.C.ia.prototype.constructor = a.C.ia; a.C.ia.prototype.text = function () {
-                    if (0 == arguments.length) { var b = a.a.g.get(this.F, c) || {}; b.bb === n && b.lb && (b.bb = b.lb.innerHTML); return b.bb } a.a.g.set(this.F,
-                        c, { bb: arguments[0] })
-                }; a.b("templateSources", a.C); a.b("templateSources.domElement", a.C.F); a.b("templateSources.anonymousTemplate", a.C.ia)
+                    a.C = {}; a.C.F = function (b) {
+                        if (this.F = b) {
+                            var c =
+                                a.a.R(b); this.ab = "script" === c ? 1 : "textarea" === c ? 2 : "template" == c && b.content && 11 === b.content.nodeType ? 3 : 4
+                        }
+                    }; a.C.F.prototype.text = function () { var b = 1 === this.ab ? "text" : 2 === this.ab ? "value" : "innerHTML"; if (0 == arguments.length) return this.F[b]; var c = arguments[0]; "innerHTML" === b ? a.a.fc(this.F, c) : this.F[b] = c }; var b = a.a.g.Z() + "_"; a.C.F.prototype.data = function (c) { if (1 === arguments.length) return a.a.g.get(this.F, b + c); a.a.g.set(this.F, b + c, arguments[1]) }; var c = a.a.g.Z(); a.C.F.prototype.nodes = function () {
+                        var b = this.F;
+                        if (0 == arguments.length) { var e = a.a.g.get(b, c) || {}, f = e.lb || (3 === this.ab ? b.content : 4 === this.ab ? b : n); if (!f || e.jd) { var g = this.text(); g && g !== e.bb && (f = a.a.Md(g, b.ownerDocument), a.a.g.set(b, c, { lb: f, bb: g, jd: !0 })) } return f } e = arguments[0]; this.ab !== n && this.text(""); a.a.g.set(b, c, { lb: e })
+                    }; a.C.ia = function (a) { this.F = a }; a.C.ia.prototype = new a.C.F; a.C.ia.prototype.constructor = a.C.ia; a.C.ia.prototype.text = function () {
+                        if (0 == arguments.length) { var b = a.a.g.get(this.F, c) || {}; b.bb === n && b.lb && (b.bb = b.lb.innerHTML); return b.bb } a.a.g.set(this.F,
+                            c, { bb: arguments[0] })
+                    }; a.b("templateSources", a.C); a.b("templateSources.domElement", a.C.F); a.b("templateSources.anonymousTemplate", a.C.ia)
                 })(); (function () {
                     function b(b, c, d) { var e; for (c = a.h.nextSibling(c); b && (e = b) !== c;)b = a.h.nextSibling(e), d(e, b) } function c(c, d) {
                         if (c.length) {
@@ -610,13 +610,13 @@
                         q(h.afterAdd, F)
                     }
                 })(); a.b("utils.setDomNodeChildrenFromArrayMapping", a.a.ec); a.ba = function () { this.allowTemplateRewriting = !1 }; a.ba.prototype = new a.ca; a.ba.prototype.constructor = a.ba; a.ba.prototype.renderTemplateSource = function (b, c, d, e) { if (c = (9 > a.a.W ? 0 : b.nodes) ? b.nodes() : null) return a.a.la(c.cloneNode(!0).childNodes); b = b.text(); return a.a.ua(b, e) }; a.ba.Ma = new a.ba; a.gc(a.ba.Ma); a.b("nativeTemplateEngine", a.ba); (function () {
-                a.$a = function () {
-                    var a = this.Hd = function () { if (!v || !v.tmpl) return 0; try { if (0 <= v.tmpl.tag.tmpl.open.toString().indexOf("__")) return 2 } catch (a) { } return 1 }();
-                    this.renderTemplateSource = function (b, e, f, g) { g = g || w; f = f || {}; if (2 > a) throw Error("Your version of jQuery.tmpl is too old. Please upgrade to jQuery.tmpl 1.0.0pre or later."); var h = b.data("precompiled"); h || (h = b.text() || "", h = v.template(null, "{{ko_with $item.koBindingContext}}" + h + "{{/ko_with}}"), b.data("precompiled", h)); b = [e.$data]; e = v.extend({ koBindingContext: e }, f.templateOptions); e = v.tmpl(h, b, e); e.appendTo(g.createElement("div")); v.fragments = {}; return e }; this.createJavaScriptEvaluatorBlock = function (a) {
-                        return "{{ko_code ((function() { return " +
-                            a + " })()) }}"
-                    }; this.addTemplate = function (a, b) { w.write("<script type='text/html' id='" + a + "'>" + b + "\x3c/script>") }; 0 < a && (v.tmpl.tag.ko_code = { open: "__.push($1 || '');" }, v.tmpl.tag.ko_with = { open: "with($1) {", close: "} " })
-                }; a.$a.prototype = new a.ca; a.$a.prototype.constructor = a.$a; var b = new a.$a; 0 < b.Hd && a.gc(b); a.b("jqueryTmplTemplateEngine", a.$a)
+                    a.$a = function () {
+                        var a = this.Hd = function () { if (!v || !v.tmpl) return 0; try { if (0 <= v.tmpl.tag.tmpl.open.toString().indexOf("__")) return 2 } catch (a) { } return 1 }();
+                        this.renderTemplateSource = function (b, e, f, g) { g = g || w; f = f || {}; if (2 > a) throw Error("Your version of jQuery.tmpl is too old. Please upgrade to jQuery.tmpl 1.0.0pre or later."); var h = b.data("precompiled"); h || (h = b.text() || "", h = v.template(null, "{{ko_with $item.koBindingContext}}" + h + "{{/ko_with}}"), b.data("precompiled", h)); b = [e.$data]; e = v.extend({ koBindingContext: e }, f.templateOptions); e = v.tmpl(h, b, e); e.appendTo(g.createElement("div")); v.fragments = {}; return e }; this.createJavaScriptEvaluatorBlock = function (a) {
+                            return "{{ko_code ((function() { return " +
+                                a + " })()) }}"
+                        }; this.addTemplate = function (a, b) { w.write("<script type='text/html' id='" + a + "'>" + b + "\x3c/script>") }; 0 < a && (v.tmpl.tag.ko_code = { open: "__.push($1 || '');" }, v.tmpl.tag.ko_with = { open: "with($1) {", close: "} " })
+                    }; a.$a.prototype = new a.ca; a.$a.prototype.constructor = a.$a; var b = new a.$a; 0 < b.Hd && a.gc(b); a.b("jqueryTmplTemplateEngine", a.$a)
                 })()
         })
     })();
@@ -625,20 +625,42 @@
 /* From: https://www.codeproject.com/Tips/780329/Bootstrap-datepicker-and-Knockout-model-binding */
 ko.bindingHandlers.datepicker = {
     init: function (element, valueAccessor, allBindingsAccessor) {
-        var options = allBindingsAccessor().datepickerOptions || {};
+        var options = ko.utils.unwrapObservable(allBindingsAccessor().datepickerOptions) || {};
         var value = ko.utils.unwrapObservable(valueAccessor());
 
         $(element).datepicker(options).on("changeDate", function (ev) {
             var observable = valueAccessor();
             observable(ev.date);
         });
-        $(element).datepicker("setValue", value);
+        $(element).datepicker("setDate", value);
+        valueAccessor()($(element).datepicker("getDate"));
+
+        ko.utils.domNodeDisposal.addDisposeCallback(element, function () {
+            $(element).datepicker('destroy');
+        });
     },
-    update: function (element, valueAccessor) {
+    update: function (element, valueAccessor, allBindingsAccessor) {
         var value = ko.utils.unwrapObservable(valueAccessor());
-        $(element).datepicker("setValue", value);
+        var datepickerDate = $(element).datepicker('getDate');
+
+        if (datepickerDate instanceof Date && value instanceof Date) {
+            if (value.getTime() !== datepickerDate.getTime())
+                $(element).datepicker('setDate', value);
+        } else if (datepickerDate instanceof Date || value instanceof Date)
+            $(element).datepicker('setDate', value);
     }
 };
+
+ko.bindingHandlers.datepickerOptions = {
+    update: function (element, valueAccessor, allBindingsAccessor) {
+        var datepickerOptions = ko.utils.unwrapObservable(valueAccessor());
+        if (datepickerOptions) {
+            $(element).datepicker('destroy');
+            ko.bindingHandlers.datepicker.init(element, ko.observable(allBindingsAccessor.get('datepicker')), allBindingsAccessor);
+        }
+    }
+};
+
 
 
 /*global ko, Chart */
@@ -658,51 +680,49 @@ ko.bindingHandlers.datepicker = {
         factory(ko, Chart);
     }
 }
-(function (ko, Chart, exports) {
+    (function (ko, Chart, exports) {
 
-    ko.observableGroup = function(observables) {
-        var observableManager = {};
-        var throttle = 0;
-        var throttleTimeout;
+        ko.observableGroup = function (observables) {
+            var observableManager = {};
+            var throttle = 0;
+            var throttleTimeout;
 
-        observableManager.throttle = function(duration) {
-            throttle = duration;
-            return observableManager;
-        };
+            observableManager.throttle = function (duration) {
+                throttle = duration;
+                return observableManager;
+            };
 
-        observableManager.subscribe = function(handler) {
-            function throttledHandler(val) {
-                if(throttle > 0) {
-                    if(!throttleTimeout) {
-                        throttleTimeout = setTimeout(function() {
-                            throttleTimeout = undefined;
-                            handler(val);
-                        }, throttle);
+            observableManager.subscribe = function (handler) {
+                function throttledHandler(val) {
+                    if (throttle > 0) {
+                        if (!throttleTimeout) {
+                            throttleTimeout = setTimeout(function () {
+                                throttleTimeout = undefined;
+                                handler(val);
+                            }, throttle);
+                        }
                     }
+                    else { handler(val); }
                 }
-                else
-                { handler(val); }
-            }
 
-            for(var i = 0; i < observables.length; i++)
-            { observables[i].subscribe(throttledHandler); }
+                for (var i = 0; i < observables.length; i++) { observables[i].subscribe(throttledHandler); }
+
+                return observableManager;
+            };
 
             return observableManager;
         };
 
-        return observableManager;
-    };
+        var getType = function (obj) {
+            if ((obj) && (typeof (obj) === "object") && (obj.constructor == (new Date).constructor)) return "date";
+            return typeof obj;
+        };
 
-    var getType = function(obj) {
-        if ((obj) && (typeof (obj) === "object") && (obj.constructor == (new Date).constructor)) return "date";
-        return typeof obj;
-    };
-
-    var getSubscribables = function(model) {
-        var subscribables = [];
-        scanForObservablesIn(model, subscribables);
-        return subscribables;
-    };
+        var getSubscribables = function (model) {
+            var subscribables = [];
+            scanForObservablesIn(model, subscribables);
+            return subscribables;
+        };
 
         var scanForObservablesIn = function (model, subscribables) {
             if (model === null || model === undefined) {
@@ -737,48 +757,47 @@ ko.bindingHandlers.datepicker = {
             });
         };
 
-    ko.bindingHandlers.chart = {
-        init: function (element, valueAccessor, allBindingsAccessor, viewModel) {
-            var allBindings = allBindingsAccessor();
-            var chartBinding = allBindings.chart;
-            var activeChart;
-            var chartData;
+        ko.bindingHandlers.chart = {
+            init: function (element, valueAccessor, allBindingsAccessor, viewModel) {
+                var allBindings = allBindingsAccessor();
+                var chartBinding = allBindings.chart;
+                var activeChart;
+                var chartData;
 
-            var createChart = function() {
-                var chartType = ko.unwrap(chartBinding.type);
-                var data = ko.toJS(chartBinding.data);
-                var options = ko.toJS(chartBinding.options);
+                var createChart = function () {
+                    var chartType = ko.unwrap(chartBinding.type);
+                    var data = ko.toJS(chartBinding.data);
+                    var options = ko.toJS(chartBinding.options);
 
-                chartData = {
-                    type: chartType,
-                    data: data,
-                    options: options
+                    chartData = {
+                        type: chartType,
+                        data: data,
+                        options: options
+                    };
+
+                    activeChart = new Chart(element, chartData);
                 };
 
-                activeChart = new Chart(element, chartData);
-            };
+                var refreshChart = function () {
+                    chartData.data = ko.toJS(chartBinding.data);
+                    activeChart.update();
+                    activeChart.resize();
+                };
 
-            var refreshChart = function() {
-                chartData.data = ko.toJS(chartBinding.data);
-                activeChart.update();
-                activeChart.resize();
-            };
+                var subscribeToChanges = function () {
+                    var throttleAmount = ko.unwrap(chartBinding.options.throttle) || 100;
+                    var dataSubscribables = getSubscribables(chartBinding.data);
+                    console.log("found obs", dataSubscribables);
 
-            var subscribeToChanges = function() {
-                var throttleAmount = ko.unwrap(chartBinding.options.throttle) || 100;
-                var dataSubscribables = getSubscribables(chartBinding.data);
-                console.log("found obs", dataSubscribables);
+                    ko.observableGroup(dataSubscribables)
+                        .throttle(throttleAmount)
+                        .subscribe(refreshChart);
+                };
 
-                ko.observableGroup(dataSubscribables)
-                    .throttle(throttleAmount)
-                    .subscribe(refreshChart);
-            };
+                createChart();
 
-            createChart();
+                if (chartBinding.options && chartBinding.options.observeChanges) { subscribeToChanges(); }
+            }
+        };
 
-            if(chartBinding.options && chartBinding.options.observeChanges)
-            { subscribeToChanges(); }
-        }
-    };
-
-}));
+    }));

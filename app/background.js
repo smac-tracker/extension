@@ -223,6 +223,7 @@ chrome.runtime.onStartup.addListener(() => {
 // Settings changes
 chrome.storage.onChanged.addListener((changes, areaName) => {
     // This block updates settings
+    console.log('-------- Settings changed')
     if (changes.hasOwnProperty('settings')) {
         // Get the new settings values
         Settings.Update(changes['settings'].newValue || changes['settings'].oldValue);
