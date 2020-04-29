@@ -651,15 +651,15 @@ ko.bindingHandlers.datepicker = {
     }
 };
 
-ko.bindingHandlers.datepickerOptions = {
-    update: function (element, valueAccessor, allBindingsAccessor) {
-        var datepickerOptions = ko.utils.unwrapObservable(valueAccessor());
-        if (datepickerOptions) {
-            $(element).datepicker('destroy');
-            ko.bindingHandlers.datepicker.init(element, ko.observable(allBindingsAccessor.get('datepicker')), allBindingsAccessor);
-        }
-    }
-};
+// ko.bindingHandlers.datepickerOptions = {
+//     update: function (element, valueAccessor, allBindingsAccessor) {
+//         var datepickerOptions = ko.utils.unwrapObservable(valueAccessor());
+//         if (datepickerOptions) {
+//             $(element).datepicker('destroy');
+//             ko.bindingHandlers.datepicker.init(element, ko.observable(allBindingsAccessor.get('datepicker')), allBindingsAccessor);
+//         }
+//     }
+// };
 
 
 

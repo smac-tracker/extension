@@ -167,13 +167,13 @@ function StopTracking(tabId) {
 
     let stopTime = new Date();
     let startTime = TrackedDomains[domain].StartTime;
-    let differenceInMs = stopTime - startTime;
-    let differenceInSeconds = Math.floor(differenceInMs / 1000);
+    let differenceInMs = stopTime.getTime() - startTime.getTime();
+    let differenceInSeconds = Math.floor(differenceInMs / 1000.0);
 
     // Each entry id is aggregated by "{currentDay}-{domain}"
     let id = getCurrentDateForId() + '-' + domain;
     let saveData = {};
-    saveData[id] = differenceInMs;
+    saveData[id] = differenceInSeconds;
 
     chrome.storage.sync.get(id, items => {
         if (items.hasOwnProperty(id))

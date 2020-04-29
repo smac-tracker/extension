@@ -60,8 +60,8 @@
             <div class="col-lg-6 col-sm-12">
                 <div class="panel grey">
                     <div class="site-count-area">
-                        <span class="site-count-num">5</span>
-                        <span class="site-count-text"> <i> sites actively tracked</i></span>
+                        <span class="site-count-num" data-bind="text: Domains().length"></span>
+                        <span class="site-count-text"> <i> site(s) actively tracked</i></span>
                     </div>
                 </div>
                 <div class="panel bg-light">
@@ -77,11 +77,11 @@
                 <div class="panel gold">
                     <h5>Today's Usage</h5>
                     <div class=todays-minute-area>
-                        <span class="todays-minutes-num">144</span>
+                        <span class="todays-minutes-num" data-bind="text: TodaysMinutes"></span>
                         <span class="todays-minutes-text"> minutes</span>
                     </div>
                     <div class="consumption-stats">
-                        <p>Your consumption is <span class="consumption-stats-text">Above Average</span></p>
+                        <p>Your consumption is <span class="consumption-stats-text" data-bind="text: TodaysConsumptionText"></span></p>
                     </div>
                 </div>
             </div>
@@ -98,35 +98,39 @@
                     <div class="col-lg-6 col-md-12">
                         <label id="start-date-text" for="start-date">Start Date</label>
                         <div class="input-group">
-                            <input type="text" id="start-date" class="form-control"
-                                data-bind="datepicker: StartDate, datepickerOptions: StartDateOptions"
+                            <input type="text" id="start-date" class="form-control" data-bind="datepicker: StartDate"
                                 aria-labelledby="start-date-text">
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-12">
                         <label for="end-date">End Date</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" id="end-date"
-                                data-bind="datepicker: EndDate, datepickerOptions: EndDateOptions">
+                            <input type="text" class="form-control" id="end-date" data-bind="datepicker: EndDate">
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col">
                         <div class="btn-group add-padding-top" role="group">
-                            <button type="button" class="btn btn-primary">Pie</button>
-                            <button type="button" class="btn btn-secondary">Bar</button>
-                            <button type="button" class="btn btn-secondary">Bar [Time]</button>
-                          </div>
-                          <div class="btn-group add-padding-top float-right" role="group">
-                            <button type="button" class="btn btn-success">Update charts</button>
-                          </div>
+                            <!-- ko foreach:Charts -->
+                            <button type="button"
+                                data-bind="class: ButtonCss, text: ChartButtonText, click: OnClick"></button>
+                            <!-- /ko -->
+                        </div>
+                        <div class="btn-group add-padding-top float-right" role="group">
+                            <button type="button" class="btn btn-success" data-bind="click: LoadChartData">Update
+                                charts</button>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
+                    <!-- ko foreach:Charts -->
+                    <!-- ko if:IsVisible -->
                     <div class="col">
-                        <canvas class="add-padding-top" data-bind="chart: { type: 'pie', data: ChartData }"></canvas>
+                        <canvas class="add-padding-top" data-bind="chart: { type: ChartType, data: ChartData, options: ChartOptions}"></canvas>
                     </div>
+                    <!-- /ko -->
+                    <!-- /ko -->
                 </div>
             </div>
             <div class="col-lg-6 col-sm-12">
@@ -139,11 +143,13 @@
                     <div class="row">
                         <div class="col add-padding-top">
                             <div class="input-group mb-3">
-                                <input type="text" class="form-control" placeholder="Add domain to track" data-bind="value: NewDomain">
+                                <input type="text" class="form-control" placeholder="Add domain to track"
+                                    data-bind="value: NewDomain">
                                 <div class="input-group-append">
-                                  <button class="btn btn-outline-primary" type="button" data-bind="click: AddDomain">Add</button>
+                                    <button class="btn btn-outline-primary" type="button"
+                                        data-bind="click: AddDomain">Add</button>
                                 </div>
-                              </div>
+                            </div>
                         </div>
                     </div>
                     <div class="row">
@@ -160,7 +166,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                 </div>
             </div>
         </div>
